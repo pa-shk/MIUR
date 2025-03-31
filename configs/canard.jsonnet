@@ -52,11 +52,11 @@
 	},
 	"iterator": {
 		"type": "basic",
-		"batch_size": 4
+		"batch_size": 2
 	},
 	"validation_iterator": {
 		"type": "basic",
-		"batch_size": 4
+		"batch_size": 2
 	},
 	"trainer": {
 		"num_epochs": 2,
