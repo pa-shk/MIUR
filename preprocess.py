@@ -8,7 +8,7 @@ import spacy
 from tqdm import tqdm
 
 random.seed(42)
-nlp_en = spacy.load('ru_core_news_sm')
+nlp_en = spacy.load('en_core_web_sm')
 
 
 def is_all_chinese(word):
