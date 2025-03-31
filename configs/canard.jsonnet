@@ -52,14 +52,14 @@
 	},
 	"iterator": {
 		"type": "basic",
-		"batch_size": 12
+		"batch_size": 4
 	},
 	"validation_iterator": {
 		"type": "basic",
-		"batch_size": 12
+		"batch_size": 4
 	},
 	"trainer": {
-		"num_epochs": 100,
+		"num_epochs": 2,
 		"cuda_device": 0,
 		"patience": 10,
 		"validation_metric": "+BLEU4",
