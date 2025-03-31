@@ -80,6 +80,8 @@ class MIUR(nn.Module):
         self.num_patch = num_patch
 
     def forward(self, x):
+        x = x[:, :512, :]
+        
         bz, x_width, hidden_size = x.shape
 
         temp_tensor = x.data.new(bz, self.num_patch, hidden_size).fill_(0)
