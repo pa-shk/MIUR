@@ -22,7 +22,7 @@
 		"word_embedder": {
 			"bert": {
 				"type": "bert-pretrained",
-				"pretrained_model": "DeepPavlov/rubert-base-cased",
+				"pretrained_model": "bert-base-multilingual-uncased",
 				"top_layer_only": true,
 				"requires_grad": true,
 			},
