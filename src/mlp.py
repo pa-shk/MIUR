@@ -6,16 +6,16 @@ import torch.nn.functional as F
 
 
 class GELU(nn.Module): 
-    def init(self):
-        super(GELU, self).init()
+    def __init__(self):
+        super(GELU, self).__init__()
 
     def forward(self, x):
         return 0.5*x*(1+torch.tanh(np.sqrt(2/np.pi)*(x+0.044715*torch.pow(x, 3))))
 
 
 class FeedForward(nn.Module):
-    def init(self, dim, hidden_dim, dropout=0.):
-        super().init()
+    def __init__(self, dim, hidden_dim, dropout=0.):
+        super().__init__()
         self.net = nn.Sequential(
             nn.Linear(dim, hidden_dim),
             GELU(),
@@ -30,8 +30,8 @@ class FeedForward(nn.Module):
 
 class MixerBlock(nn.Module):
 
-    def init(self, dim, num_patch, token_dim, channel_dim, dropout=0.):
-        super().init()
+    def __init__(self, dim, num_patch, token_dim, channel_dim, dropout=0.):
+        super().__init__()
 
         self.token_mix = nn.Sequential(
             nn.LayerNorm(dim),
@@ -54,8 +54,8 @@ class MixerBlock(nn.Module):
 
 class MLPMixer(nn.Module):
 
-    def init(self, dim, depth, token_dim, channel_dim, num_patch):
-        super().init()
+    def __init__(self, dim, depth, token_dim, channel_dim, num_patch):
+        super().__init__()
 
         self.mixer_blocks = nn.ModuleList([])
         for _ in range(depth):
@@ -73,22 +73,19 @@ class MLPMixer(nn.Module):
 
 class MIUR(nn.Module):
 
-    def init(self, dim, depth, token_dim, channel_dim, num_patch):
-        super().init()
+    def __init__(self, dim, depth, token_dim, channel_dim, num_patch):
+        super().__init__()
 
         self.mlp = MLPMixer(dim, depth, token_dim, channel_dim, num_patch)
         self.num_patch = num_patch
 
     def forward(self, x):
-        try:
-            bz, x_width, hidden_size = x.shape
+        bz, x_width, hidden_size = x.shape
 
-            temp_tensor = x.data.new(bz, self.num_patch, hidden_size).fill_(0)
-            temp_tensor[:, :x_width, :] = x
-            x = temp_tensor
+        temp_tensor = x.data.new(bz, self.num_patch, hidden_size).fill_(0)
+        temp_tensor[:, :x_width, :] = x
+        x = temp_tensor
 
-            x = self.mlp(x)
-            x = x[:, :x_width, :]
-        except:
-            pass
+        x = self.mlp(x)
+        x = x[:, :x_width, :]
         return x
